@@ -23,10 +23,6 @@ public class Autor {
     @Column(name = "autor_nome")
     private String autorNome;
 
-    @OneToMany(mappedBy = "autor")
-    @JsonIgnore
-    private List<Autor> autorList;
-
     public Integer getAutorId() {
         return autorId;
     }
@@ -43,11 +39,4 @@ public class Autor {
         this.autorNome = autorNome;
     }
 
-    public List<Autor> getAutorList() {
-        return autorList;
-    }
-
-    public void setAutorList(List<Autor> autorList) {
-        this.autorList = autorList;
-    }
 }
