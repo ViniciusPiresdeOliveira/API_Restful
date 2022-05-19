@@ -16,27 +16,39 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "autor")
 public class Autor {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "autor_id")
-    private Integer autorId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "autor_id")
+	private Integer autorId;
 
-    @Column(name = "autor_nome")
-    private String autorNome;
+	@Column(name = "autor_nome")
+	private String autorNome;
 
-    public Integer getAutorId() {
-        return autorId;
-    }
+	@OneToMany(mappedBy = "autor")
+	@JsonIgnore
+	private List<Livro> livroList;
 
-    public void setAutorId(Integer autorId) {
-        this.autorId = autorId;
-    }
+	public Integer getAutorId() {
+		return autorId;
+	}
 
-    public String getAutorNome() {
-        return autorNome;
-    }
+	public void setAutorId(Integer autorId) {
+		this.autorId = autorId;
+	}
 
-    public void setAutorNome(String autorNome) {
-        this.autorNome = autorNome;
-    }
+	public String getAutorNome() {
+		return autorNome;
+	}
 
+	public void setAutorNome(String autorNome) {
+		this.autorNome = autorNome;
+	}
+
+	public List<Livro> getLivroList() {
+		return livroList;
+	}
+
+	public void setLivroList(List<Livro> livroList) {
+		this.livroList = livroList;
+	}
+	
 }
