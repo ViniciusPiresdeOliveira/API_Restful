@@ -19,7 +19,7 @@ import com.residencia.academia.service.InstrutorService;
 @RequestMapping("/instrutor")
 public class InstrutorController {
 	@Autowired
-	InstrutorService instrutorService;
+	private InstrutorService instrutorService;
 
 	@GetMapping
 	public ResponseEntity<List<Instrutor>> findAllInstrutor() {
