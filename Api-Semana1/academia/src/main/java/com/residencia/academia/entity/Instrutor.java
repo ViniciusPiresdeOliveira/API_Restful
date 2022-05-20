@@ -28,7 +28,7 @@ public class Instrutor {
 	@Column(name = "nascimento")
 	private Date dataNascimento;
 
-	@Column(name = "titulação")
+	@Column(name = "titulacao")
 	private Integer titulacaoInstrutor;
 	
 	@OneToMany(mappedBy = "instrutor")

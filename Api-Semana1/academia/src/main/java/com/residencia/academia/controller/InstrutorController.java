@@ -28,7 +28,7 @@ public class InstrutorController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Instrutor> findInstrutorById(Integer id) {
+	public ResponseEntity<Instrutor> findInstrutorById(@PathVariable Integer id) {
 		Instrutor instrutor = instrutorService.listarUm(id);
 		return new ResponseEntity<>(instrutor, HttpStatus.OK);
 	}

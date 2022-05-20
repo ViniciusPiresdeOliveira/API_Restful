@@ -5,4 +5,5 @@ import com.residencia.academia.entity.Turma;
 
 public interface TurmaRepository extends JpaRepository<Turma, Integer>{
 
+	
 }
