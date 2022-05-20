@@ -17,7 +17,26 @@ public class InstrutorService {
 		return instrutorRepository.findAll();
 	}
 	
-	public Instrutor listarUm (Integer id){
+	public Instrutor listarUm(Integer id){
 		return instrutorRepository.findById(id).get();
 	}
+	
+	public Instrutor saveInstrutor(Instrutor instrutor) {
+		return instrutorRepository.save(instrutor);
+	}
+	
+	public Instrutor updateInstrutor(Instrutor instrutor) {
+		return instrutorRepository.save(instrutor);
+	}
+	
+	public void deleteInstrutor(Integer id) {
+		Instrutor instrutor = instrutorRepository.findById(id).get();
+		instrutorRepository.delete(instrutor);
+	}
+	
+	public void deleteInstrutor(Instrutor instrutor) {
+		instrutorRepository.delete(instrutor);
+	}
+	
+
 }
