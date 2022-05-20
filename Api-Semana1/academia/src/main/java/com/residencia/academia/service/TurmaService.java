@@ -24,4 +24,12 @@ public class TurmaService {
 	public Turma saveTurma(Turma turma) {
 		return turmaRepository.save(turma);
 	}
+	
+	public Turma updateTurma(Turma turma) {
+		return turmaRepository.save(turma);
+	}
+	
+	public void deleteTurma(Integer id) {
+		turmaRepository.deleteById(id);
+	}
 }
