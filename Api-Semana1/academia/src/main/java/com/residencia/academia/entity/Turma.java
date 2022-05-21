@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "turma")
 public class Turma {
@@ -32,6 +35,7 @@ public class Turma {
 	private Date dataFim;
 	
 	@ManyToOne
+	@JsonBackReference
 	@JoinColumn(name = "id_instrutor", referencedColumnName = "id_instrutor")
 	private Instrutor instrutor;
 

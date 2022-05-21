@@ -30,7 +30,11 @@ public class InstrutorController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Instrutor> findInstrutorById(@PathVariable Integer id) {
 		Instrutor instrutor = instrutorService.listarUm(id);
-		return new ResponseEntity<>(instrutor, HttpStatus.OK);
+		if (null == instrutor)
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+		else
+			return new ResponseEntity<>(instrutor, HttpStatus.OK);
+
 	}
 
 	@PostMapping
