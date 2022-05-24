@@ -11,10 +11,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "instrutor")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "idInstrutor")
 public class Instrutor {
 
 	@Id
@@ -77,7 +81,7 @@ public class Instrutor {
 	public void setTitulacaoInstrutor(Integer titulacaoInstrutor) {
 		this.titulacaoInstrutor = titulacaoInstrutor;
 	}
-
+	
 	public List<Turma> getTurmaList() {
 		return turmaList;
 	}

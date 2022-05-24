@@ -18,7 +18,7 @@ public class TurmaService {
 	}
 	
 	public Turma listarUma(Integer id) {
-		return turmaRepository.findById(id).get();
+			return turmaRepository.findById(id).isPresent() ? turmaRepository.findById(id).get() : null;	
 	}
 	
 	public Turma saveTurma(Turma turma) {
@@ -32,4 +32,14 @@ public class TurmaService {
 	public void deleteTurma(Integer id) {
 		turmaRepository.deleteById(id);
 	}
+	
+	/*public Boolean deleteTurmaComConferencia(Integer id) {
+		if(turmaRepository.findById(id).isPresent()) {
+			turmaRepository.deleteById(id);
+			return true;
+		}else {
+			return false;
+		}
+		
+	}*/
 }
