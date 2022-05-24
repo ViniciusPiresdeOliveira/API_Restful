@@ -2,7 +2,6 @@ package com.residencia.academia.entity;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,15 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "instrutor")
-@JsonIdentityInfo(
+/*@JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "idInstrutor")
+        property = "idInstrutor")*/
 public class Instrutor {
 
 	@Id
@@ -40,6 +39,7 @@ public class Instrutor {
 	
 	@OneToMany(mappedBy = "instrutor")
 	//@JsonManagedReference
+	@JsonIgnore
 	private List<Turma> turmaList;
 
 	public Integer getIdInstrutor() {

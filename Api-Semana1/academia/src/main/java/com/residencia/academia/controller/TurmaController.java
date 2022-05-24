@@ -26,15 +26,15 @@ public class TurmaController {
 	public ResponseEntity<List<Turma>> findAllTurma() {
 		return new ResponseEntity<>(turmaService.listarTodos(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{id}")
-    public ResponseEntity<Turma> findTurmaById(@PathVariable Integer id) {
-        Turma turma = turmaService.listarUma(id);
-        if(null == turma)
-            throw new NoSuchElementFoundException("Não foi encontrada Turma com o id " + id);
-        else
-            return new ResponseEntity<>(turmaService.listarUma(id), HttpStatus.OK);
-    }
+	public ResponseEntity<Turma> findTurmaById(@PathVariable Integer id) {
+		Turma turma = turmaService.listarUma(id);
+		if (null == turma)
+			throw new NoSuchElementFoundException("Não foi encontrada Turma com o id " + id);
+		else
+			return new ResponseEntity<>(turmaService.listarUma(id), HttpStatus.OK);
+	}
 
 	@PostMapping
 	public ResponseEntity<Turma> saveTurma(@RequestBody Turma turma) {
@@ -42,16 +42,32 @@ public class TurmaController {
 	}
 
 	@PutMapping
-	public ResponseEntity<Turma> updateTurma(@PathVariable(value = "id") Integer id, @RequestBody Turma Turma) {
-		return new ResponseEntity<>(turmaService.updateTurma(Turma), HttpStatus.OK);
-	}
-
+    public ResponseEntity<Turma> updateTurma(@RequestBody Turma turma){
+        return new ResponseEntity<>(turmaService.updateTurma(turma), HttpStatus.OK);
+    }
+	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteTurma(@PathVariable Integer id) {
+		Turma turma = turmaService.listarUma(id);
+		if (null == turma)
+			throw new NoSuchElementFoundException(
+					"Não foi possível excluir a Turma, " + "pois não foi " + "encontrada uma turma com o id " + id);
+
 		turmaService.deleteTurma(id);
 		return new ResponseEntity<>("", HttpStatus.OK);
 	}
-	
-	
-	
+
+	/*
+	 * @DeleteMapping("/{id}") public ResponseEntity<String>
+	 * deleteTurmaComConferencia(@PathVariable I /*
+	 * 
+	 * @DeleteMapping("/{id}") public ResponseEntity<String>
+	 * deleteTurmaComConferencia(@PathVariable Integer id) { Boolean verificacao =
+	 * turmaService.deleteTurmaComConferencia(id); if(verificacao) return new
+	 * ResponseEntity<>("", HttpStatus.OK); else throw new
+	 * NoSuchElementFoundException("Não foi possível excluir a Turma, " +
+	 * "pois não foi " + "encontrada uma turma com o id " + id);
+	 * 
+	 * }
+	 */
 }

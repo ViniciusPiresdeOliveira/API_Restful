@@ -18,6 +18,7 @@ import com.residencia.academia.service.InstrutorService;
 @RestController
 @RequestMapping("/instrutor")
 public class InstrutorController {
+	
 	@Autowired
 	private InstrutorService instrutorService;
 

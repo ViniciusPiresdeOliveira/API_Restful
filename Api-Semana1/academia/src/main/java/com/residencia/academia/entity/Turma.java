@@ -13,12 +13,13 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity
 @Table(name = "turma")
-@JsonIdentityInfo(
+/*@JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "idTurma")
+        property = "idTurma")*/
 public class Turma {
 
 	@Id
@@ -40,9 +41,16 @@ public class Turma {
 	
 	@ManyToOne
 	//@JsonBackReference
+	//@JsonIgnore
 	@JoinColumn(name = "id_instrutor", referencedColumnName = "id_instrutor")
 	private Instrutor instrutor;
 
+	@ManyToOne
+	//@JsonBackReference
+	//@JsonIgnore
+	@JoinColumn(name = "id_atividade", referencedColumnName = "id_atividade")
+	private Atividade atividade;
+	
 	public Integer getIdTurma() {
 		return idTurma;
 	}
@@ -89,6 +97,14 @@ public class Turma {
 
 	public void setInstrutor(Instrutor instrutor) {
 		this.instrutor = instrutor;
+	}
+
+	public Atividade getAtividade() {
+		return atividade;
+	}
+
+	public void setAtividade(Atividade atividade) {
+		this.atividade = atividade;
 	}
 	
 	
