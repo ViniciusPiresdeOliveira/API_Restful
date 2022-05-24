@@ -52,7 +52,7 @@ public class TurmaController {
 		if (null == turma)
 			throw new NoSuchElementFoundException("Não foi possível excluir a Turma, " + "pois não foi " + "encontrada uma turma com o id " + id);
 		turmaService.deleteTurma(id);
-		return new ResponseEntity<>("", HttpStatus.OK);
+		return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
 	}
 
 	/*
