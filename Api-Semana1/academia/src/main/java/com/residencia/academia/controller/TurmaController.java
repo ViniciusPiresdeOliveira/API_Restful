@@ -50,9 +50,7 @@ public class TurmaController {
 	public ResponseEntity<String> deleteTurma(@PathVariable Integer id) {
 		Turma turma = turmaService.listarUma(id);
 		if (null == turma)
-			throw new NoSuchElementFoundException(
-					"Não foi possível excluir a Turma, " + "pois não foi " + "encontrada uma turma com o id " + id);
-
+			throw new NoSuchElementFoundException("Não foi possível excluir a Turma, " + "pois não foi " + "encontrada uma turma com o id " + id);
 		turmaService.deleteTurma(id);
 		return new ResponseEntity<>("", HttpStatus.OK);
 	}
