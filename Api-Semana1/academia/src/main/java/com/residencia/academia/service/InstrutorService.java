@@ -46,7 +46,6 @@ public class InstrutorService {
 		Instrutor novoInstrutor = instrutorRepository.save(instrutor);
 		
 		return converterEntidadeParaDTO(novoInstrutor);
-		
 	}
 
 	public Instrutor updateInstrutor(Instrutor instrutor) {

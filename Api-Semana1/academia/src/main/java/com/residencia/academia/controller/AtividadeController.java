@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.residencia.academia.dto.AtividadeDTO;
+import com.residencia.academia.dto.AtividadeDTO;
 import com.residencia.academia.entity.Atividade;
 import com.residencia.academia.entity.Turma;
 import com.residencia.academia.exception.NoSuchElementFoundException;
@@ -30,17 +32,23 @@ public class AtividadeController {
 	public ResponseEntity<List<Atividade>> findAllAtividade() {
 		List<Atividade> atividadeList = atividadeService.listarTodos();
 		if (atividadeList.isEmpty()) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			throw new NoSuchElementFoundException("Lista vazia");
 		} else {
 			return new ResponseEntity<>(atividadeList, HttpStatus.OK);
-		}	
+		}
 	}
-
+	
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<AtividadeDTO> findAtividadeDTOById(@PathVariable Integer id) {
+		AtividadeDTO atividadeDTO = atividadeService.listarUmDTO(id);
+		return new ResponseEntity<>(atividadeDTO, HttpStatus.OK);
+	}
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<Atividade> findAtividadeById(@PathVariable Integer id) {
 		Atividade atividade = atividadeService.listarUm(id);
 		if (null == atividade) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+			throw new NoSuchElementFoundException("Não foi encontrada Atividade com o ID: " + id);
 		} else {
 			return new ResponseEntity<>(atividade, HttpStatus.OK);
 		}
@@ -49,11 +57,15 @@ public class AtividadeController {
 	@PostMapping
 	public ResponseEntity<Atividade> saveAtividade(@RequestBody Atividade atividade) {
 		Atividade novaAtividade = atividadeService.saveAtividade(atividade);
-		if (null == novaAtividade) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(novaAtividade, HttpStatus.CREATED);
-		}
+		return new ResponseEntity<>(novaAtividade, HttpStatus.CREATED);
+
+	}
+	
+	@PostMapping("/dto")
+	public ResponseEntity<AtividadeDTO> saveAtividadeDTO(@RequestBody AtividadeDTO atividadeDTO) {
+		AtividadeDTO novoAtividadeDTO = atividadeService.saveAtividadeDTO(atividadeDTO);
+		return new ResponseEntity<>(novoAtividadeDTO, HttpStatus.CREATED);
+	
 	}
 
 	@PutMapping
@@ -71,11 +83,11 @@ public class AtividadeController {
 	public ResponseEntity<String> deleteAtividade(@PathVariable Integer id) {
 		Atividade atividade = atividadeService.listarUm(id);
 		if (null == atividade) {
-			throw new NoSuchElementFoundException("Não foi possível excluir a Turma, pois não "
-												 +"foi encontrada uma turma com o ID: " + id);
+			throw new NoSuchElementFoundException("Não foi possível excluir a Atividade, pois não "
+												 +"foi encontrada uma atividade com o ID: " + id);
 		} else {
 			atividadeService.deleteAtividade(id);
-			return new ResponseEntity<>("", HttpStatus.OK);
+			return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
 		}
 	}
 }
