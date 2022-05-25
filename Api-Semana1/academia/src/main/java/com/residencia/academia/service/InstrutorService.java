@@ -33,8 +33,9 @@ public class InstrutorService {
 		InstrutorDTO instrutorDTO = new InstrutorDTO();
 		if (null != instrutor) {
 			instrutorDTO = converterEntidadeParaDTO(instrutor);
+			return instrutorDTO;
 		}
-		return instrutorDTO;
+		return null;
 	}
 
 	public Instrutor saveInstrutor(Instrutor instrutor) {

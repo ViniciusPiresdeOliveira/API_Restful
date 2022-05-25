@@ -36,8 +36,9 @@ public class TurmaService {
 		TurmaDTO turmaDTO = new TurmaDTO();
 		if (null != turma) {
 			turmaDTO = converterEntidadeParaDTO(turma);
+			return turmaDTO;
 		}
-		return turmaDTO;
+		return null;
 	}
 
 	public Turma saveTurma(Turma turma) {
@@ -61,13 +62,16 @@ public class TurmaService {
 
 	private Turma converterDTOParaEntidade(TurmaDTO turmaDTO) {
 		Turma turma = new Turma();
+		
 		turma.setDataFim(turmaDTO.getDataFim());
 		turma.setDataInicio(turmaDTO.getDataInicio());
 		turma.setDuracaoTurma(turmaDTO.getDuracaoTurma());
 		turma.setHorarioTurma(turmaDTO.getHorarioTurma());
 		turma.setIdTurma(turmaDTO.getIdTurma());
+		
 		Instrutor instrutor = instrutorService.listarUm(turmaDTO.getInstrutorDTO().getIdInstrutor());
 		turma.setInstrutor(instrutor);
+		
 		Atividade atividade = atividadeService.listarUm(turmaDTO.getInstrutorDTO().getIdInstrutor());
 		turma.setAtividade(atividade);
 
@@ -75,16 +79,20 @@ public class TurmaService {
 	}
 
 	private TurmaDTO converterEntidadeParaDTO(Turma turma) {
-		TurmaDTO turmaDTO = new TurmaDTO();
+		TurmaDTO turmaDTO = new TurmaDTO();  
+		
 		turmaDTO.setDataFim(turma.getDataFim());
 		turmaDTO.setDataInicio(turma.getDataInicio());
 		turmaDTO.setDuracaoTurma(turma.getDuracaoTurma());
 		turmaDTO.setHorarioTurma(turma.getHorarioTurma());
 		turmaDTO.setIdTurma(turma.getIdTurma());
+		
 		InstrutorDTO instrutorDTO = instrutorService.listarUmDTO(turma.getInstrutor().getIdInstrutor());
 		turmaDTO.setInstrutorDTO(instrutorDTO);
+		
 		AtividadeDTO atividadeDTO = atividadeService.listarUmDTO(turma.getInstrutor().getIdInstrutor());
 		turmaDTO.setAtividadeDTO(atividadeDTO);
+		
 		return turmaDTO;
 
 	}
