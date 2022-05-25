@@ -44,13 +44,15 @@ public class InstrutorController {
 		else
 			return new ResponseEntity<>(instrutor, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/dto/{id}")
 	public ResponseEntity<InstrutorDTO> findInstrutorDTOById(@PathVariable Integer id) {
 		InstrutorDTO instrutorDTO = instrutorService.listarUmDTO(id);
-		
-		return new ResponseEntity<>(instrutorDTO, HttpStatus.OK);
-
+		if (null == instrutorDTO) {
+			throw new NoSuchElementFoundException("Não foi encontrado Instrutor com o ID: " + id);
+		} else {
+			return new ResponseEntity<>(instrutorDTO, HttpStatus.OK);
+		}
 	}
 
 	@PostMapping
@@ -69,25 +71,18 @@ public class InstrutorController {
 	@PutMapping
 	public ResponseEntity<Instrutor> updateInstrutor(@RequestBody Instrutor instrutor) {
 		Instrutor novoInstrutor = instrutorService.updateInstrutor(instrutor);
-		if (null == novoInstrutor) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(novoInstrutor, HttpStatus.OK);
-		}
+		return new ResponseEntity<>(novoInstrutor, HttpStatus.OK);		
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteInstrutor(@PathVariable Integer id) {
 		Instrutor instrutor = instrutorService.listarUm(id);
 		if (null == instrutor) {
-			throw new NoSuchElementFoundException(
-					"Não foi possível excluir a Turma, pois não " + "foi encontrada uma turma com o ID: " + id);
-
+			throw new NoSuchElementFoundException("Não foi possível excluir o Instrutor, pois não "
+												 +"foi encontrado um Instrutor com o ID: " + id);
 		} else {
 			instrutorService.deleteInstrutor(id);
-			return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+			return new ResponseEntity<>("Instrutor deletado com sucesso", HttpStatus.OK);
 		}
-
 	}
-
 }

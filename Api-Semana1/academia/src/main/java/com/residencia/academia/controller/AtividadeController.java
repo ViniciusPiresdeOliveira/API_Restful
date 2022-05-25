@@ -38,12 +38,6 @@ public class AtividadeController {
 		}
 	}
 	
-	@GetMapping("/dto/{id}")
-	public ResponseEntity<AtividadeDTO> findAtividadeDTOById(@PathVariable Integer id) {
-		AtividadeDTO atividadeDTO = atividadeService.listarUmDTO(id);
-		return new ResponseEntity<>(atividadeDTO, HttpStatus.OK);
-	}
-	
 	@GetMapping("/{id}")
 	public ResponseEntity<Atividade> findAtividadeById(@PathVariable Integer id) {
 		Atividade atividade = atividadeService.listarUm(id);
@@ -52,6 +46,16 @@ public class AtividadeController {
 		} else {
 			return new ResponseEntity<>(atividade, HttpStatus.OK);
 		}
+	}
+	
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<AtividadeDTO> findAtividadeDTOById(@PathVariable Integer id) {
+		AtividadeDTO atividadeDTO = atividadeService.listarUmDTO(id);
+		if (null == atividadeDTO) {
+			throw new NoSuchElementFoundException("Não foi encontrada Atividade com o ID: " + id);
+		} else {
+			return new ResponseEntity<>(atividadeDTO, HttpStatus.OK);
+		}		
 	}
 
 	@PostMapping
@@ -71,12 +75,7 @@ public class AtividadeController {
 	@PutMapping
 	public ResponseEntity<Atividade> updateAtividade(@RequestBody Atividade atividade) {
 		Atividade novaAtividade = atividadeService.updateAtividade(atividade);
-		if (null == novaAtividade) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(novaAtividade, HttpStatus.OK);
-		}
-
+		return new ResponseEntity<>(novaAtividade, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
@@ -84,10 +83,10 @@ public class AtividadeController {
 		Atividade atividade = atividadeService.listarUm(id);
 		if (null == atividade) {
 			throw new NoSuchElementFoundException("Não foi possível excluir a Atividade, pois não "
-												 +"foi encontrada uma atividade com o ID: " + id);
+												 +"foi encontrada uma Atividade com o ID: " + id);
 		} else {
 			atividadeService.deleteAtividade(id);
-			return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+			return new ResponseEntity<>("Atividade deletada com sucesso", HttpStatus.OK);
 		}
 	}
 }

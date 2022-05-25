@@ -36,7 +36,7 @@ public class TurmaController {
 			return new ResponseEntity<>(turmaList, HttpStatus.OK);
 		}
 	}
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Turma> findTurmaById(@PathVariable Integer id) {
 		Turma turma = turmaService.listarUma(id);
@@ -45,14 +45,15 @@ public class TurmaController {
 		else
 			return new ResponseEntity<>(turmaService.listarUma(id), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/dto/{id}")
 	public ResponseEntity<TurmaDTO> findTurmaDTOById(@PathVariable Integer id) {
 		TurmaDTO turmaDTO = turmaService.listarUmDTO(id);
-		if (null == turmaDTO)
+		if (null == turmaDTO) {
 			throw new NoSuchElementFoundException("Não foi encontrada Turma com o ID: " + id);
-		else
+		} else {
 			return new ResponseEntity<>(turmaService.listarUmDTO(id), HttpStatus.OK);
+		}
 	}
 
 	@PostMapping
@@ -60,7 +61,7 @@ public class TurmaController {
 		Turma novaTurma = turmaService.saveTurma(turma);
 		return new ResponseEntity<>(turmaService.saveTurma(turma), HttpStatus.CREATED);
 	}
-	
+
 	@PostMapping("/dto")
 	public ResponseEntity<TurmaDTO> saveTurmaDTO(@RequestBody TurmaDTO turmaDTO) {
 		TurmaDTO novaTurmaDTO = turmaService.saveTurmaDTO(turmaDTO);
@@ -70,11 +71,7 @@ public class TurmaController {
 	@PutMapping
 	public ResponseEntity<Turma> updateTurma(@RequestBody Turma turma) {
 		Turma novaTurma = turmaService.updateTurma(turma);
-		if (null == novaTurma) {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		} else {
-			return new ResponseEntity<>(novaTurma, HttpStatus.OK);
-		}
+		return new ResponseEntity<>(novaTurma, HttpStatus.OK);		
 	}
 
 	@DeleteMapping("/{id}")
@@ -82,10 +79,10 @@ public class TurmaController {
 		Turma turma = turmaService.listarUma(id);
 		if (null == turma) {
 			throw new NoSuchElementFoundException("Não foi possível excluir a Turma, pois não "
-												 +"foi encontrada uma turma com o ID: " + id);
+												 +"foi encontrada uma Turma com o ID: " + id);
 		} else {
 			turmaService.deleteTurma(id);
-			return new ResponseEntity<>("Deletado com sucesso", HttpStatus.OK);
+			return new ResponseEntity<>("Turma deletada com sucesso", HttpStatus.OK);
 		}
 	}
 
