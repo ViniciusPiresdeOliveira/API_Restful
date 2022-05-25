@@ -1,6 +1,7 @@
 package com.residencia.academia.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.residencia.academia.dto.InstrutorDTO;
 import com.residencia.academia.entity.Instrutor;
 import com.residencia.academia.service.InstrutorService;
 
@@ -26,6 +29,13 @@ public class InstrutorController {
 	public ResponseEntity<List<Instrutor>> findAllInstrutor() {
 		List<Instrutor> instrutorList = instrutorService.listarTodos();
 		return new ResponseEntity<>(instrutorList, HttpStatus.OK);
+	}
+	
+	@GetMapping("/dto/{id}")
+	public ResponseEntity<InstrutorDTO> findInstrutorDTOById(@PathVariable Integer id) {
+		InstrutorDTO instrutorDTO = instrutorService.listarUmDTO(id);
+		return new ResponseEntity<>(instrutorDTO, HttpStatus.OK);
+
 	}
 
 	@GetMapping("/{id}")
@@ -45,6 +55,13 @@ public class InstrutorController {
 
 	}
 
+	@PostMapping("/dto")
+	public ResponseEntity<InstrutorDTO> saveInstrutorDTO(@RequestBody InstrutorDTO instrutorDTO) {
+		InstrutorDTO novoInstrutorDTO = instrutorService.saveInstrutorDTO(instrutorDTO);
+		return new ResponseEntity<>(novoInstrutorDTO, HttpStatus.CREATED);
+
+	}
+	
 	@PutMapping
 	public ResponseEntity<Instrutor> updateInstrutor(@RequestBody Instrutor instrutor) {
 		Instrutor novoInstrutor = instrutorService.updateInstrutor(instrutor);
