@@ -74,9 +74,8 @@ public class Fornecedor {
 	@Column(name = "data_abertura")
 	private Date dataAbertura;
 
-	//@OneToMany(mappedBy = "fornecedor")
-	//@JsonManagedReference
-	//private List<Produto> produtoList;
+	@OneToMany(mappedBy = "fornecedor")
+	private List<Produto> produtoList;
 	
 	public Integer getIdFornecedor() {
 		return idFornecedor;
@@ -205,5 +204,15 @@ public class Fornecedor {
 	public void setDataAbertura(Date dataAbertura) {
 		this.dataAbertura = dataAbertura;
 	}
+
+	public List<Produto> getProdutoList() {
+		return produtoList;
+	}
+
+	public void setProdutoList(List<Produto> produtoList) {
+		this.produtoList = produtoList;
+	}
+	
+	
 	
 }

@@ -30,9 +30,8 @@ public class Categoria {
 	@NotEmpty(message = "O nome da categoria não pode ficar em branco.")
 	private String nomeCategoria;
 	
-	//@OneToMany(mappedBy = "categoria")
-	//@JsonManagedReference
-	//private List<Produto> produtoList;
+	@OneToMany(mappedBy = "categoria")
+	private List<Produto> produtoList;
 
 	public Integer getIdCategoria() {
 		return idCategoria;
@@ -49,5 +48,14 @@ public class Categoria {
 	public void setNomeCategoria(String nomeCategoria) {
 		this.nomeCategoria = nomeCategoria;
 	}
+
+	public List<Produto> getProdutoList() {
+		return produtoList;
+	}
+
+	public void setProdutoList(List<Produto> produtoList) {
+		this.produtoList = produtoList;
+	}
+	
 	
 }
