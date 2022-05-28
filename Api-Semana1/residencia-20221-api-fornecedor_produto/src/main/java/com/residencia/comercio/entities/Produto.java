@@ -8,32 +8,32 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "produto")
-@JsonIdentityInfo(
-	    generator = ObjectIdGenerators.PropertyGenerator.class,
-	    property = "idProduto")
+@JsonIdentityInfo(scope = Produto.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "idProduto")
 public class Produto {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_produto")
 	private Integer idProduto;
-	
+
+	@NotBlank(message = "O SKU do produto não pode estar vazio")
 	@Column(name = "sku")
 	private String sku;
-	
+
 	@Column(name = "nome_produto")
 	private String nomeProduto;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_fornecedor", referencedColumnName = "id_fornecedor")
 	private Fornecedor fornecedor;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id_categoria")
 	private Categoria categoria;
@@ -83,6 +83,5 @@ public class Produto {
 		return "Produto [idProduto=" + idProduto + ", sku=" + sku + ", nomeProduto=" + nomeProduto + ", fornecedor="
 				+ fornecedor + ", categoria=" + categoria + "]";
 	}
-	
-	
+
 }

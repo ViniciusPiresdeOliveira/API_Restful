@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.residencia.comercio.dtos.CadastroEmpresaCepDTO;
 import com.residencia.comercio.dtos.CadastroEmpresaReceitaDTO;
 import com.residencia.comercio.dtos.FornecedorDTO;
 import com.residencia.comercio.entities.Fornecedor;
@@ -44,12 +45,9 @@ public class FornecedorService {
 	
 	public FornecedorDTO saveFornecedorDTO(FornecedorDTO fornecedorDTO) {
 			
-		Fornecedor fornecedor = new Fornecedor();
-		
-		fornecedor.setIdFornecedor(fornecedorDTO.getIdFornecedor());
-		Fornecedor novoFornecedor = fornecedorRepository.save(fornecedor);
-		
-		return converterEntidadeParaDto(novoFornecedor);
+		Fornecedor fornecedor = convertDTOToEntidade(fornecedorDTO);
+        Fornecedor novoFornecedor = fornecedorRepository.save(fornecedor);
+        return converterEntidadeParaDto(novoFornecedor);
 	}
 	
 	public Fornecedor updateFornecedor(Fornecedor fornecedor) {
@@ -68,13 +66,43 @@ public class FornecedorService {
 	private Fornecedor convertDTOToEntidade(FornecedorDTO fornecedorDTO){
 		Fornecedor fornecedor = new Fornecedor();
 		
+		fornecedor.setBairro(fornecedorDTO.getBairro());
+		fornecedor.setCep(fornecedorDTO.getCep());
+		fornecedor.setCnpj(fornecedorDTO.getCnpj());
+		fornecedor.setComplemento(fornecedorDTO.getComplemento());
+		fornecedor.setDataAbertura(fornecedorDTO.getDataAbertura());
+		fornecedor.setEmail(fornecedorDTO.getEmail());
 		fornecedor.setIdFornecedor(fornecedorDTO.getIdFornecedor());
+		fornecedor.setLogradouro(fornecedorDTO.getLogradouro());
+		fornecedor.setMunicipio(fornecedorDTO.getMunicipio());
+		fornecedor.setNomeFantasia(fornecedorDTO.getNomeFantasia());
+		fornecedor.setNumero(fornecedorDTO.getNumero());
+		fornecedor.setRazaoSocial(fornecedorDTO.getRazaoSocial());
+		fornecedor.setStatusSituacao(fornecedorDTO.getStatusSituacao());
+		fornecedor.setTelefone(fornecedorDTO.getTelefone());
+		fornecedor.setTipo(fornecedorDTO.getTipo());
+		fornecedor.setUf(fornecedorDTO.getUf());
 		return fornecedor;
 	}
 		
 	private FornecedorDTO converterEntidadeParaDto(Fornecedor fornecedor) {
 		FornecedorDTO fornecedorDTO = new FornecedorDTO();
+		fornecedorDTO.setBairro(fornecedor.getBairro());
+		fornecedorDTO.setCep(fornecedor.getCep());
+		fornecedorDTO.setCnpj(fornecedor.getCnpj());
+		fornecedorDTO.setComplemento(fornecedor.getComplemento());
+		fornecedorDTO.setDataAbertura(fornecedor.getDataAbertura());
+		fornecedorDTO.setEmail(fornecedor.getEmail());
 		fornecedorDTO.setIdFornecedor(fornecedor.getIdFornecedor());
+		fornecedorDTO.setLogradouro(fornecedor.getLogradouro());
+		fornecedorDTO.setMunicipio(fornecedor.getMunicipio());
+		fornecedorDTO.setNomeFantasia(fornecedor.getNomeFantasia());
+		fornecedorDTO.setNumero(fornecedor.getNumero());
+		fornecedorDTO.setRazaoSocial(fornecedor.getRazaoSocial());
+		fornecedorDTO.setStatusSituacao(fornecedor.getStatusSituacao());
+		fornecedorDTO.setTelefone(fornecedor.getTelefone());
+		fornecedorDTO.setTipo(fornecedor.getTipo());
+		fornecedorDTO.setUf(fornecedor.getUf());
 		return fornecedorDTO;
 	}
 	
@@ -88,5 +116,17 @@ public class FornecedorService {
 				restTemplate.getForObject(uri, CadastroEmpresaReceitaDTO.class, params);
 
 		return cadastroEmpresaReceitaDTO;
+	}
+	
+	public CadastroEmpresaCepDTO consultarDadosPorCep(String cep) {
+		RestTemplate restTemplate = new RestTemplate();
+		String uri = "https://viacep.com.br/ws/{cep}/json";
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("cep", cep);
+
+		CadastroEmpresaCepDTO cadastroEmpresaCepDTO = 
+				restTemplate.getForObject(uri, CadastroEmpresaCepDTO.class, params);
+
+		return cadastroEmpresaCepDTO;
 	}
 }

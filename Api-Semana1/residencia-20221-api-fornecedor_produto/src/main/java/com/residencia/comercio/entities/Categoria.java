@@ -17,9 +17,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "categoria")
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "idCategoria")
+@JsonIdentityInfo(scope = Categoria.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "idCategoria")
 public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +27,9 @@ public class Categoria {
 	@Column(name = "nome_categoria")
 	@NotEmpty(message = "O nome da categoria não pode ficar em branco.")
 	private String nomeCategoria;
+
+	@Column(name = "imagem")
+	private String nomeImagem;
 	
 	@OneToMany(mappedBy = "categoria")
 	private List<Produto> produtoList;
@@ -56,6 +57,14 @@ public class Categoria {
 	public void setProdutoList(List<Produto> produtoList) {
 		this.produtoList = produtoList;
 	}
-	
+
+	public String getNomeImagem() {
+		return nomeImagem;
+	}
+
+	public void setNomeImagem(String nomeImagem) {
+		this.nomeImagem = nomeImagem;
+	}
+
 	
 }

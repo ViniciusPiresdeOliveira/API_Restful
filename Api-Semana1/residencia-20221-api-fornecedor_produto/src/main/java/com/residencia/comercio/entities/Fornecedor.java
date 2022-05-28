@@ -18,9 +18,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "fornecedor")
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "idFornecedor")
+@JsonIdentityInfo(scope = Fornecedor.class, generator = ObjectIdGenerators.PropertyGenerator.class, property = "idFornecedor")
 public class Fornecedor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,55 +26,55 @@ public class Fornecedor {
 	private Integer idFornecedor;
 
 	@Column(name = "cnpj")
-	//@NotEmpty(message = "O número do CNPJ não pode ficar em branco.")
-	//@Digits(message="O CNPJ deve conter 14 números.", fraction = 0, integer = 14)
-	private Integer cnpj;
+	// @NotEmpty(message = "O número do CNPJ não pode ficar em branco.")
+	// @Digits(message="O CNPJ deve conter 14 números.", fraction = 0, integer = 14)
+	private String cnpj;
 
 	@Column(name = "tipo")
 	private String tipo;
 
 	@Column(name = "razao_social")
 	private String razaoSocial;
-	
+
 	@Column(name = "uf")
 	private String uf;
-	
+
 	@Column(name = "telefone")
 	private String telefone;
-	
+
 	@Column(name = "email")
 	private String email;
-	
+
 	@Column(name = "nome_fantasia")
 	private String nomeFantasia;
-	
+
 	@Column(name = "status_situacao")
 	private String statusSituacao;
-	
+
 	@Column(name = "bairro")
 	private String bairro;
-	
+
 	@Column(name = "logradouro")
 	private String logradouro;
-	
+
 	@Column(name = "numero")
 	private Integer numero;
-	
+
 	@Column(name = "complemento")
 	private String complemento;
-	
+
 	@Column(name = "cep")
 	private String cep;
-	
+
 	@Column(name = "municipio")
 	private String municipio;
-	
+
 	@Column(name = "data_abertura")
 	private Date dataAbertura;
 
 	@OneToMany(mappedBy = "fornecedor")
 	private List<Produto> produtoList;
-	
+
 	public Integer getIdFornecedor() {
 		return idFornecedor;
 	}
@@ -85,11 +83,11 @@ public class Fornecedor {
 		this.idFornecedor = idFornecedor;
 	}
 
-	public Integer getCnpj() {
+	public String getCnpj() {
 		return cnpj;
 	}
 
-	public void setCnpj(Integer cnpj) {
+	public void setCnpj(String cnpj) {
 		this.cnpj = cnpj;
 	}
 
@@ -212,7 +210,5 @@ public class Fornecedor {
 	public void setProdutoList(List<Produto> produtoList) {
 		this.produtoList = produtoList;
 	}
-	
-	
-	
+
 }
