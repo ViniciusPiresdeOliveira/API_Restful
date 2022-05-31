@@ -40,7 +40,7 @@ public class ProdutoController {
 		}
 		return new ResponseEntity<>(produtoService.findAll(), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/id")
 	public ResponseEntity<Produto> findByIdRequest(@RequestParam @NotBlank Integer id) {
 		Produto produto = produtoService.findById(id);
@@ -60,33 +60,30 @@ public class ProdutoController {
 			return new ResponseEntity<>(produto, HttpStatus.OK);
 		}
 	}
+
 	@GetMapping("/query")
 	public ResponseEntity<Produto> findByIdQuery(
-			@RequestParam
-			@NotBlank(message = "O sku deve ser preenchido.")
-			String sku){
+			@RequestParam @NotBlank(message = "O sku deve ser preenchido.") String sku) {
 		return new ResponseEntity<>(null, HttpStatus.CONTINUE);
 	}
-	
+
 	@GetMapping("/request")
 	public ResponseEntity<Produto> findByIdRequest1(
-			@RequestParam
-			@NotBlank(message = "O id deve ser preenchido.")
-			Integer id){
+			@RequestParam @NotBlank(message = "O id deve ser preenchido.") Integer id) {
 		return new ResponseEntity<>(null, HttpStatus.CONTINUE);
 	}
 
 	@PostMapping
-    public ResponseEntity<Produto> save(@Valid @RequestBody Produto produto) {
-        Produto novoProduto = produtoService.save(produto);
-        return new ResponseEntity<>(novoProduto, HttpStatus.CREATED);
-    }
+	public ResponseEntity<Produto> save(@Valid @RequestBody Produto produto) {
+		Produto novoProduto = produtoService.save(produto);
+		return new ResponseEntity<>(novoProduto, HttpStatus.CREATED);
+	}
 
-    @PostMapping("/dto")
-    public ResponseEntity<ProdutoDTO> saveDTO(@RequestBody ProdutoDTO produtoDTO) {
-        ProdutoDTO novoProdutoDTO = produtoService.saveProdutoDTO(produtoDTO);
-        return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
-    }
+	@PostMapping("/dto")
+	public ResponseEntity<ProdutoDTO> saveDTO(@RequestBody ProdutoDTO produtoDTO) {
+		ProdutoDTO novoProdutoDTO = produtoService.saveProdutoDTO(produtoDTO);
+		return new ResponseEntity<>(novoProdutoDTO, HttpStatus.CREATED);
+	}
 
 	@PutMapping
 	public ResponseEntity<Produto> update(@RequestBody Produto produto) {
@@ -95,23 +92,22 @@ public class ProdutoController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Produto> update(@PathVariable Integer id, @RequestBody Produto produto){
+	public ResponseEntity<Produto> update(@PathVariable Integer id, @RequestBody Produto produto) {
 		Produto produtoAtualizado = produtoService.updateComId(produto, id);
-		if(null == produtoAtualizado)
+		if (null == produtoAtualizado)
 			return new ResponseEntity<>(produtoAtualizado, HttpStatus.BAD_REQUEST);
 		else
 			return new ResponseEntity<>(produtoAtualizado, HttpStatus.OK);
 	}
-	
-	@DeleteMapping
-	public ResponseEntity<String> delete(Produto produto){
-		produtoService.delete(produto);
-		return new ResponseEntity<>("", HttpStatus.OK);
-	}
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> delete(Integer id){
-		produtoService.deletePorId(id);
-		return new ResponseEntity<>("", HttpStatus.OK);
-	}
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
+        Produto produto = produtoService.findById(id);
+        if (null == produto) {
+            throw new NoSuchElementFoundException("Não foi possível excluir o Produto de id: " + id + ", ele não existe");
+        } else {
+            produtoService.deletePorId(id);
+            return new ResponseEntity<>("Deletado com sucesso!", HttpStatus.OK);
+        }
+    }
 }

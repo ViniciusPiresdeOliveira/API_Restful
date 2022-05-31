@@ -76,10 +76,6 @@ public class ProdutoService {
 		return produtoAtualizado;
 	}
 
-	public void delete(Produto produto) {
-		produtoRepository.delete(produto);
-	}
-
 	public void deletePorId(Integer id) {
 		produtoRepository.deleteById(id);
 	}
