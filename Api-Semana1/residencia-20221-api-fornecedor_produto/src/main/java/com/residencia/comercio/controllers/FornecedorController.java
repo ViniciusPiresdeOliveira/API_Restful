@@ -23,19 +23,25 @@ import com.residencia.comercio.entities.Fornecedor;
 import com.residencia.comercio.exceptions.NoSuchElementFoundException;
 import com.residencia.comercio.services.FornecedorService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/fornecedor")
+@Tag(name = "Fornecedores", description = "Endpoints")
 public class FornecedorController {
 	@Autowired
 	FornecedorService fornecedorService;
 
 	@GetMapping
+	@Operation(summary = "Listar todos os Fornecedores.")
 	public ResponseEntity<List<Fornecedor>> findAllFornecedor() {
 		List<Fornecedor> fornecedorList = fornecedorService.findAllFornecedor();
 		return new ResponseEntity<>(fornecedorList, HttpStatus.OK);
 	}
 	
 	@GetMapping("/cnpj/{cnpj}")
+	@Operation(summary = "Consultar CNPJ do Fornecedor.")
 	public ResponseEntity<CadastroEmpresaReceitaDTO> consultarDadosPorCnpj(String cnpj) {
 		CadastroEmpresaReceitaDTO cadEmpresaDTO = fornecedorService.consultarDadosPorCnpj(cnpj);
 		if(null == cadEmpresaDTO)
@@ -45,6 +51,7 @@ public class FornecedorController {
 	}
 	
 	@GetMapping("/{cep}")
+	@Operation(summary = "Consultar CEP do Fornecedor.")
 	public ResponseEntity<CadastroEmpresaCepDTO> consultarDadosPorCep(String cep) {
 		CadastroEmpresaCepDTO cadEmpresaDTO = fornecedorService.consultarDadosPorCep(cep);
 		if(null == cadEmpresaDTO)
@@ -54,12 +61,14 @@ public class FornecedorController {
 	}
 
 	@GetMapping("/dto/{id}")
+	@Operation(summary = "Consultar FornecedorDTO pelo ID.")
 	public ResponseEntity<FornecedorDTO> findFornecedorDTOById(@PathVariable Integer id) {
 		FornecedorDTO fornecedorDTO = fornecedorService.findFornecedorDTOById(id);
 		return new ResponseEntity<>(fornecedorDTO, HttpStatus.OK);
 	}
 	
 	@GetMapping("/{id}")
+	@Operation(summary = "Consultar Fornecedor pelo ID.")
 	public ResponseEntity<Fornecedor> findFornecedorById(@PathVariable Integer id) {
 		Fornecedor fornecedor = fornecedorService.findFornecedorById(id);
 		if(null == fornecedor)
@@ -69,6 +78,7 @@ public class FornecedorController {
 	}
 	
 	@PostMapping
+	@Operation(summary = "Postar um Fornecedor.")
 	public ResponseEntity<Fornecedor> saveFornecedor(@RequestParam String cnpj) {
 		Fornecedor fornecedor = new Fornecedor();
 		Fornecedor novoFornecedor = fornecedorService.saveFornecedor(fornecedor);
@@ -76,30 +86,35 @@ public class FornecedorController {
 	}
 
 	@PostMapping("/completo")
+	@Operation(summary = "Postar um Fornecedor completo.")
 	public ResponseEntity<Fornecedor> saveFornecedorCompleto(@RequestBody Fornecedor fornecedor) {
 		Fornecedor novoFornecedor = fornecedorService.saveFornecedor(fornecedor);
 		return new ResponseEntity<>(novoFornecedor, HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/dto")
+	@Operation(summary = "Postar um FornecedorDTO.")
 	public ResponseEntity<FornecedorDTO> saveFornecedorDTO(@RequestBody FornecedorDTO fornecedorDTO) {
 		FornecedorDTO novoFornecedorDTO = fornecedorService.saveFornecedorDTO(fornecedorDTO);
 		return new ResponseEntity<>(novoFornecedorDTO, HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/cnpj/{cnpj}")
+	@Operation(summary = "Postar um Fornecedor pelo CNPJ usando uma API externa.")
     public ResponseEntity<Fornecedor> saveFornecedorCnpj(@PathVariable String cnpj) throws ParseException {
         Fornecedor novoFornecedor = fornecedorService.saveFornecedorCnpj(cnpj);
         return new ResponseEntity<>(novoFornecedor, HttpStatus.CREATED);
     }
 	
 	@PutMapping
+	@Operation(summary = "Atualizar um Fornecedor.")
 	public ResponseEntity<Fornecedor> updateFornecedor(@RequestBody Fornecedor fornecedor) {
 		Fornecedor novoFornecedor = fornecedorService.updateFornecedor(fornecedor);
 		return new ResponseEntity<>(novoFornecedor, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
+	@Operation(summary = "Deletar um Fornecedor pelo ID.")
 	public ResponseEntity<String> deleteFornecedor(@PathVariable Integer id) {
 		if(null == fornecedorService.findFornecedorById(id))
 			return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
