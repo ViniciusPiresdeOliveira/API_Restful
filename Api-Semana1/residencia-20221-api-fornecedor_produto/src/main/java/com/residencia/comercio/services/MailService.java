@@ -36,5 +36,10 @@ public class MailService {
 		sMailMessage.setText(mensagemEmail);
 		
 		sMailMessage.setFrom("teste@teste.com");
+		
+		emailSender.send(sMailMessage);
 	}
+	
+	public void enviarEmailHtml(String destinatárioEmail, String assunto, String mensagemEmail) {
+}
 }

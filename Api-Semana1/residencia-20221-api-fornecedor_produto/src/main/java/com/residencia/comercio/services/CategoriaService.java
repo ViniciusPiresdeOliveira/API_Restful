@@ -18,6 +18,8 @@ public class CategoriaService {
 	CategoriaRepository categoriaRepository;
 	@Autowired
 	ArquivoService arquivoService;
+	@Autowired
+	MailService emailService;
 
 	public List<Categoria> findAllCategoria() {
 		return categoriaRepository.findAll();
@@ -76,24 +78,21 @@ public class CategoriaService {
 	}
 
 	public Categoria saveCategoriaComFoto(String categoriaString, MultipartFile file) throws Exception {
-        Categoria categoriaConvertida = new Categoria();
-        try {
-            ObjectMapper objMapper = new ObjectMapper();
-            categoriaConvertida = objMapper.readValue(categoriaString, Categoria.class);
-        } catch (IOException e) {
-            System.out.println("Ocorreu um erro na gravação");
-        }
-        Categoria categoriaBD = categoriaRepository.save(categoriaConvertida);
-        categoriaBD.setNomeImagem(categoriaBD.getIdCategoria() + "" + file.getOriginalFilename());
-        Categoria categoriaAtualizada = categoriaRepository.save(categoriaBD);
+		Categoria categoriaConvertida = new Categoria();
+		try {
+			ObjectMapper objMapper = new ObjectMapper();
+			categoriaConvertida = objMapper.readValue(categoriaString, Categoria.class);
+		} catch (IOException e) {
+			System.out.println("Ocorreu um erro na gravação");
+		}
+		Categoria categoriaBD = categoriaRepository.save(categoriaConvertida);
+		categoriaBD.setNomeImagem(categoriaBD.getIdCategoria() + "" + file.getOriginalFilename());
+		Categoria categoriaAtualizada = categoriaRepository.save(categoriaBD);
 
-        try {
-            arquivoService.criarArquivo(categoriaBD.getIdCategoria() + "" + file.getOriginalFilename(), file);
-        } catch (Exception e) {
-            throw new Exception("Ocorreu um erro ao tentar copiar o arquivo. - " + e.getStackTrace());
-        }
+		arquivoService.criarArquivo(categoriaBD.getIdCategoria() + "" + file.getOriginalFilename(), file);
+		String corpoEmail = "Foi cadastrada uma nova categoria" + categoriaAtualizada.toString();
+		emailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
 
-        return categoriaAtualizada;
-    }
+		return categoriaAtualizada;
+	}
 }
-
