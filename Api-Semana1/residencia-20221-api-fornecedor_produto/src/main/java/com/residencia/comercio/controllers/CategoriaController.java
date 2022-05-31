@@ -64,7 +64,7 @@ public class CategoriaController {
 	@PostMapping(value = "/com-foto", consumes = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.MULTIPART_FORM_DATA_VALUE })
 	public ResponseEntity<Categoria> saveCategoria(@RequestPart("categoria") String categoria,
-			@RequestPart("file") MultipartFile file) {
+			@RequestPart("file") MultipartFile file) throws Exception {
 		Categoria novoCategoria = categoriaService.saveCategoriaComFoto(categoria, file);
 		return new ResponseEntity<>(novoCategoria, HttpStatus.CREATED);
 	}

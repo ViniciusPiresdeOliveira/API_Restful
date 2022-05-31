@@ -60,6 +60,21 @@ public class ProdutoController {
 			return new ResponseEntity<>(produto, HttpStatus.OK);
 		}
 	}
+	@GetMapping("/query")
+	public ResponseEntity<Produto> findByIdQuery(
+			@RequestParam
+			@NotBlank(message = "O sku deve ser preenchido.")
+			String sku){
+		return new ResponseEntity<>(null, HttpStatus.CONTINUE);
+	}
+	
+	@GetMapping("/request")
+	public ResponseEntity<Produto> findByIdRequest1(
+			@RequestParam
+			@NotBlank(message = "O id deve ser preenchido.")
+			Integer id){
+		return new ResponseEntity<>(null, HttpStatus.CONTINUE);
+	}
 
 	@PostMapping
     public ResponseEntity<Produto> save(@Valid @RequestBody Produto produto) {
