@@ -44,7 +44,7 @@ public class MailService {
 		emailSender.send(sMailMessage);
 	}
 
-	public void enviarEmailHtml(String destinatárioEmail, String assunto, String mensagemEmail) {
+	/*public void enviarEmailHtml(String destinatárioEmail, String assunto, String mensagemEmail) {
 
 		SimpleMailMessage sMailMessage = new SimpleMailMessage();
 
@@ -56,5 +56,5 @@ public class MailService {
 
 		emailSender.send(sMailMessage);
 
-	}
+	}*/
 }
