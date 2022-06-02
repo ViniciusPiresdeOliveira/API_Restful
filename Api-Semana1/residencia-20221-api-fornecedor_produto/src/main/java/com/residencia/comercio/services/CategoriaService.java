@@ -85,11 +85,17 @@ public class CategoriaService {
 		} catch (IOException e) {
 			System.out.println("Ocorreu um erro na gravação");
 		}
+
 		Categoria categoriaBD = categoriaRepository.save(categoriaConvertida);
-		categoriaBD.setNomeImagem(categoriaBD.getIdCategoria() + "" + file.getOriginalFilename());
+		categoriaBD.setNomeImagem(categoriaBD.getIdCategoria() + "_" + file.getOriginalFilename());
 		Categoria categoriaAtualizada = categoriaRepository.save(categoriaBD);
 
-		arquivoService.criarArquivo(categoriaBD.getIdCategoria() + "" + file.getOriginalFilename(), file);
+		try {
+			arquivoService.criarArquivo(categoriaBD.getIdCategoria() + "" + file.getOriginalFilename(), file);
+		} catch (Exception e) {
+			throw new Exception("Não foi possível mover o arquivo. - " + e.getStackTrace());
+		}
+
 		String corpoEmail = "Foi cadastrada uma nova categoria" + categoriaAtualizada.toString();
 		emailService.enviarEmailTexto("teste@teste.com", "Cadastro de Categoria", corpoEmail);
 
